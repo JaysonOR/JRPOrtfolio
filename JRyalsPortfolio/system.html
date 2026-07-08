@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System — Jayson</title>
+<style>
+  :root{
+    --ink:#12151b;
+    --panel:#1b1f27;
+    --line:#2b3040;
+    --paper:#e7e9ee;
+    --paper-dim:#8a90a1;
+    --signal:#7fe7c4;
+    --warn:#f2b84b;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--ink); color:var(--paper);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono','Space Mono','Courier New',monospace;}
+  body::before{
+    content:""; position:fixed; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px; opacity:0.15; pointer-events:none; z-index:0;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  nav.topnav{display:flex; justify-content:space-between; align-items:center; padding:28px 0;}
+  nav.topnav .brand{font-weight:700; font-size:15px;}
+  nav.topnav a.back{
+    color:var(--paper-dim); text-decoration:none; font-size:14px; font-weight:600;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  nav.topnav a.back:hover{color:var(--paper);}
+
+  .badge{
+    display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.08em;
+    padding:4px 8px; border-radius:5px; text-transform:uppercase; margin-bottom:16px;
+    background:var(--warn); color:#241a04;
+  }
+
+  h1{font-size:clamp(28px,5vw,42px); margin:0 0 24px; letter-spacing:-0.02em;}
+
+  .media{
+    width:100%; aspect-ratio:16/9;
+    background:repeating-linear-gradient(45deg, #232837, #232837 10px, #1e222c 10px, #1e222c 20px);
+    border:1px solid var(--line); border-radius:var(--radius);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--paper-dim); font-size:14px; text-align:center; padding:16px;
+    margin-bottom:40px; overflow:hidden;
+  }
+  .media img, .media video{width:100%; height:100%; object-fit:cover;}
+
+  section{margin-bottom:48px;}
+  .section-label{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--paper-dim); margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-label::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  .body-text{font-size:15px; color:var(--paper-dim); max-width:640px;}
+
+  /* ---- Programming Challenges ---- */
+  .challenge-list{display:flex; flex-direction:column; gap:24px;}
+  .challenge{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden; display:grid; grid-template-columns:220px 1fr;
+  }
+  @media (max-width:600px){.challenge{grid-template-columns:1fr;}}
+  .challenge-snip{
+    background:repeating-linear-gradient(45deg, #232837, #232837 8px, #1e222c 8px, #1e222c 16px);
+    border-right:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--paper-dim); font-size:11px; text-align:center; padding:14px;
+    min-height:140px;
+  }
+  @media (max-width:600px){.challenge-snip{border-right:none; border-bottom:1px solid var(--line);}}
+  .challenge-snip img{width:100%; height:100%; object-fit:cover;}
+  .challenge-body{padding:18px 22px;}
+  .challenge-body h4{margin:0 0 8px; font-size:15px; color:var(--paper);}
+  .challenge-body p{margin:0; font-size:14px; color:var(--paper-dim);}
+
+  /* ---- What I Learned ---- */
+  .learned-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px;}
+  .learned-list li{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; font-size:14px; color:var(--paper-dim);
+  }
+  .learned-list li::before{
+    content:"›"; color:var(--signal); font-weight:700; font-size:16px; line-height:1.3;
+  }
+
+  footer{border-top:1px solid var(--line); padding:32px 0 60px; color:var(--paper-dim); font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <nav class="topnav">
+    <div class="brand mono">JAYSON.DEV</div>
+    <a class="back" href="portfolio.html">&larr; Back to portfolio</a>
+  </nav>
+
+  <div id="content">
+    <!-- populated by script below -->
+  </div>
+
+  <footer>© 2026 Jayson.</footer>
+</div>
+
+<script>
+  // ---- System data: add/edit entries here, one object per gameplay system ----
+  const systems = {
+    "npc-model-swap": {
+      title: "NPC Model-Swap System",
+      media: "[ Drop gameplay clip / gif here ]",
+      whatBuilt: "A runtime character system that lets a single NPC rig wear any character model without breaking animation, so one behavior rig can be reused across many enemy variants instead of hand-rigging each one separately.",
+      challenges: [
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Preserving animation rigging across mismatched models",
+          desc: "Swapping skinned meshes at runtime broke bone mappings when models had different proportions. Solved by remapping the skeleton hierarchy on swap instead of assuming a shared rig."
+        },
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Avoiding a re-import per character model",
+          desc: "Needed a way to add new swappable models without re-authoring animations for each one, so the swap logic reads from a shared avatar definition."
+        }
+      ],
+      learned: [
+        "How Unity's avatar/rig system actually maps bones under the hood, not just how to use it",
+        "Why designing for reusability up front saves far more time than patching one-off fixes later",
+        "How to isolate and debug a rigging bug by testing one model pair at a time"
+      ]
+    },
+    "ragdoll-navmesh": {
+      title: "Ragdoll & NavMesh System",
+      media: "[ Drop gameplay clip / gif here ]",
+      whatBuilt: "A system that transitions NPCs between NavMesh-driven movement and ragdoll physics, so enemies path around the world normally but react believably to death or heavy impacts.",
+      challenges: [
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Ragdolls clipping through terrain",
+          desc: "Joint physics occasionally sent limbs through the floor on death. Fixed by tuning collider layers and adding a physics substep for high-speed transitions."
+        },
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Smooth handoff between animation and physics",
+          desc: "Switching from NavMesh-driven animation to ragdoll caused a visible snap. Solved with a short blend that hands off velocity from the animator to the rigidbody."
+        }
+      ],
+      learned: [
+        "How NavMesh agents and Rigidbody-driven physics need to be explicitly handed off, not just toggled",
+        "The tradeoffs between physics accuracy and performance when many ragdolls are active at once",
+        "How to read physics debug gizmos to track down clipping issues instead of guessing"
+      ]
+    },
+    "pickup-camera": {
+      title: "Pickup & Camera System",
+      media: "[ Drop gameplay clip / gif here ]",
+      whatBuilt: "The small systems that make a game feel readable to play: bobbing/spinning collectible pickups, and a camera-relative movement scheme so controls stay intuitive from any angle.",
+      challenges: [
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Movement feeling wrong when the camera rotated",
+          desc: "Input directions stayed world-relative, so moving 'forward' meant something different depending on camera angle. Fixed by projecting input onto the camera's forward/right vectors."
+        },
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Pickup animation timing feeling stiff",
+          desc: "Initial bob/spin used a fixed loop that didn't feel natural. Reworked with a sine-based offset so timing feels organic instead of mechanical."
+        }
+      ],
+      learned: [
+        "How to translate input into camera-relative directions using vector projection",
+        "How much 'game feel' comes from small timing and easing details, not just core mechanics",
+        "The value of playtesting early instead of polishing a mechanic in isolation"
+      ]
+    },
+    "inventory-system": {
+      title: "Inventory System",
+      media: "[ Drop gameplay clip / gif here ]",
+      whatBuilt: "A slot-based inventory system with item stacking, drag-and-drop reordering, and item definitions driven by scriptable objects so designers can add new items without touching code.",
+      challenges: [
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Stacking logic breaking on partial stacks",
+          desc: "Splitting and merging stacks across slots caused item counts to desync. Solved by centralizing all stack math in one function instead of handling it per-interaction."
+        },
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Drag-and-drop losing track of the source slot",
+          desc: "Dropping an item outside a valid slot sometimes deleted it. Fixed by always returning to the origin slot unless the drop target explicitly validates first."
+        }
+      ],
+      learned: [
+        "How to use scriptable objects as a clean, designer-friendly data layer",
+        "Why centralizing state-mutating logic prevents whole classes of desync bugs",
+        "How to design UI drag interactions defensively, assuming the drop will fail"
+      ]
+    },
+    "dialogue-system": {
+      title: "Dialogue System",
+      media: "[ Drop gameplay clip / gif here ]",
+      whatBuilt: "A branching dialogue system with conditional choices, letting NPC conversations change based on what the player has already done in the game.",
+      challenges: [
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Dialogue trees becoming unmanageable as they grew",
+          desc: "A flat list of lines and choices got hard to follow past a few branches. Restructured as a node graph so each line's next steps are explicit and easy to trace."
+        },
+        {
+          snip: "[ Add code snippet image ]",
+          title: "Conditions on choices getting duplicated everywhere",
+          desc: "Checking player state (quest flags, items, etc.) inline in the dialogue data got repetitive and error-prone. Pulled conditions into a shared evaluator function instead."
+        }
+      ],
+      learned: [
+        "How to model branching content as a graph instead of a flat sequence",
+        "The importance of separating dialogue content from the logic that evaluates it",
+        "How to keep writer-facing content easy to edit without exposing raw code"
+      ]
+    }
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('system');
+  const data = systems[id];
+  const content = document.getElementById('content');
+
+  if(!data){
+    content.innerHTML = `<h1>System not found</h1><p class="body-text">Check the link, or head back to <a href="portfolio.html" style="color:var(--signal)">the portfolio</a>.</p>`;
+  } else {
+    content.innerHTML = `
+      <span class="badge">System</span>
+      <h1>${data.title}</h1>
+
+      <div class="media">${data.media}</div>
+
+      <section>
+        <div class="section-label">What I built</div>
+        <p class="body-text">${data.whatBuilt}</p>
+      </section>
+
+      <section>
+        <div class="section-label">Programming challenges</div>
+        <div class="challenge-list">
+          ${data.challenges.map(c => `
+            <div class="challenge">
+              <div class="challenge-snip">${c.snip}</div>
+              <div class="challenge-body">
+                <h4>${c.title}</h4>
+                <p>${c.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">What I learned</div>
+        <ul class="learned-list">
+          ${data.learned.map(l => `<li>${l}</li>`).join('')}
+        </ul>
+      </section>
+    `;
+  }
+</script>
+
+</body>
+</html>
