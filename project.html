@@ -46,7 +46,19 @@
   .badge.web{background:var(--signal); color:#0d1712;}
   .badge.game{background:var(--warn); color:#241a04;}
 
-  h1{font-size:clamp(28px,5vw,42px); margin:0 0 24px; letter-spacing:-0.02em;}
+  .title-row{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:20px; flex-wrap:wrap; margin-bottom:24px;
+  }
+  h1{font-size:clamp(28px,5vw,42px); margin:0; letter-spacing:-0.02em;}
+  .btn{
+    font-family:inherit; font-size:14px; font-weight:700;
+    padding:11px 20px; border-radius:8px; text-decoration:none;
+    white-space:nowrap;
+    background:var(--signal); color:#0d1712; border:1px solid var(--signal);
+    transition:background .15s ease, transform .15s ease;
+  }
+  .btn:hover{background:#94f2d2; transform:translateY(-1px);}
 
   .media{
     width:100%; aspect-ratio:16/9;
@@ -57,6 +69,7 @@
     margin-bottom:40px; overflow:hidden;
   }
   .media img, .media video{width:100%; height:100%; object-fit:cover;}
+  .media iframe{width:100%; height:100%; border:0;}
 
   section{margin-bottom:48px;}
   .section-label{
@@ -67,6 +80,8 @@
   .section-label::after{content:""; flex:1; height:1px; background:var(--line);}
 
   .summary{font-size:16px; color:var(--paper-dim); max-width:640px;}
+  .summary p{margin:0 0 14px;}
+  .summary p:last-child{margin-bottom:0;}
 
   .meta-grid{
     display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
@@ -82,6 +97,7 @@
   }
   .meta-item p{margin:0; font-size:15px; font-weight:600;}
 
+  .role-title{font-size:15px; font-weight:700; color:var(--signal); margin:0 0 16px;}
   .resp-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px;}
   .resp-list li{
     display:flex; gap:12px; align-items:flex-start;
@@ -101,7 +117,7 @@
 
   <nav class="topnav">
     <div class="brand mono">JAYSON.DEV</div>
-    <a class="back" href="portfolio.html">&larr; Back to projects</a>
+    <a class="back" href="index.html">&larr; Back to projects</a>
   </nav>
 
   <div id="content">
@@ -114,74 +130,138 @@
 <script>
   // ---- Project data: add/edit entries here, one object per project ----
   const projects = {
-    "npc-model-swap": {
+    "knight-at-the-library": {
       tag: "game",
-      title: "NPC Model-Swap System",
-      media: "[ Drop gameplay clip / gif here ]",
-      summary: "Runtime character reassignment via skinned mesh swapping, so a single NPC rig can wear any character model without breaking animation.",
-      teamSize: "Solo",
-      duration: "e.g. 3 weeks",
-      awards: "—",
+      title: "Knight at the Library",
+      media: "<iframe src=\"https://www.youtube.com/embed/cpHmCCDSUmw\" title=\"Knight at the Library\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
+      playUrl: "https://hypelocomotive.itch.io/knight-at-the-library",
+      engine: "Unreal Engine",
+      language: "Blueprints & C++",
+      role: "Lead Programmer",
+      summary: "<p>Knight at the Library is a tense first-person puzzle horror game set inside a library after hours. You play as a robber attempting to steal valuable artifacts but unknowingly disturb the vengeful spirit that haunts the halls. To survive, you must solve puzzles and return the stolen items—all while evading a relentless, possessed knight determined to stop you.</p><p>This project was developed during the Orlando Library Game Jam with a team of six other participants I had just met. Despite the short weekend timeframe, we created a thrilling horror experience that went on to win 3rd place overall in the jam.</p>",
+      teamSize: "Team of 7",
+      duration: "68-hour game jam",
+      awards: "3rd Place — Orlando Library Game Jam",
       responsibilities: [
-        "Designed the skinned mesh swap pipeline to preserve animation rigging across models",
-        "Built tooling to preview model swaps in-editor",
-        "Debugged rig mismatches between differently-proportioned character models"
+        "Translated game designers’ ideas and plans into a functional, scalable codebase",
+        "Developed the core enemy AI systems to drive engaging gameplay",
+        "Programmed and integrated all designer-planned puzzles, ensuring smooth functionality",
+        "Collaborated with level designers to debug and resolve issues after code merges",
+        "Managed programming tasks, delegating responsibilities based on team members’ strengths and project timelines",
+        "Seamlessly integrated character models from the art team with the AI system, maintaining both technical accuracy and creative vision"
       ]
     },
-    "ragdoll-navmesh": {
+    "retail-overflow": {
       tag: "game",
-      title: "Ragdoll & NavMesh Playground",
-      media: "[ Drop gameplay clip / gif here ]",
-      summary: "Tuned ragdoll physics and NavMesh agent behavior for believable NPC death and movement reactions.",
-      teamSize: "Solo",
-      duration: "e.g. 2 weeks",
-      awards: "—",
+      title: "Retail Overflow",
+      media: "<iframe src=\"https://www.youtube.com/embed/rR7XWctDlNg\" title=\"Retail Overflow\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
+      playUrl: "https://milkbagboii.itch.io/retail-overflow",
+      engine: "Unreal Engine",
+      language: "Blueprints & C++",
+      role: "Game Designer, Programmer",
+      summary: "<p>Retail Overflow is a fast-paced, hectic game where you play as the only employee on shift in a store overflowing with customers. Armed with your trusty broom, you must keep the aisles clean and maintain order—because if the mess piles up, the manager won’t be happy!</p><p>This project was created for Mini Jam #43, where the theme was Overflow and the required special item was a brush. Working with one teammate over just three days, we developed a chaotic cleaning simulator where sweeping and knocking customers out of the way becomes your key strategy. The game was later awarded 3rd place out of 64 entries.</p>",
+      teamSize: "Team of 2",
+      duration: "3-day game jam",
+      awards: "3rd Place — Mini Jam #43 (out of 64 entries)",
       responsibilities: [
-        "Tuned joint physics for believable ragdoll transitions on death",
-        "Configured NavMesh agents for pathing around dynamic obstacles",
-        "Resolved edge cases where ragdolls clipped through terrain"
+        "Designed and implemented customer AI, including pathfinding and interactive behaviors with the game world",
+        "Optimized performance in an AI-heavy environment by adjusting rendering and AI processing for off-screen or distant characters",
+        "Developed boss AI with a unique tolerance meter system, enhancing difficulty scaling and player immersion",
+        "Designed and programmed the “bonk” mechanic, allowing AI to be dynamically knocked away by the player",
+        "Built and implemented all in-game UI systems, ensuring clarity and player accessibility"
       ]
     },
-    "pickup-camera": {
+    "jester-dice": {
       tag: "game",
-      title: "Pickup & Camera Mechanics",
-      media: "[ Drop gameplay clip / gif here ]",
-      summary: "Bobbing/spinning collectible pickups and camera-relative character movement, the small-feel systems that make a game readable to play.",
-      teamSize: "Solo",
-      duration: "e.g. 1 week",
+      title: "Jester Dice",
+      media: "<iframe src=\"https://www.youtube.com/embed/rlZ79GrSq4Y\" title=\"Jester Dice\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
+      playUrl: "https://milkbagboii.itch.io/jesters-dice",
+      engine: "Godot",
+      language: "GDScript",
+      role: "Game Designer, Programmer, UI Designer",
+      summary: "<p>Jester Dice is a Balatro-inspired dice game where you roll up to five dice each round to build your score and push your luck. Unlock unique Action Cards that multiply points on specific rolls, strategically freeze dice to set up combos, and test your skills to survive all 20 challenging rounds.</p><p>This project was originally created for the Brackeys Game Jam 2025.2, where the theme was Risk it for the Biscuit. Working with one teammate over seven days, we set out to design a gambling-inspired game with a dice-driven twist. Following the jam, we decided to continue development—adding new mechanics, polishing gameplay, and fixing bugs to bring the project closer to our full vision.</p>",
+      teamSize: "Team of 2",
+      duration: "7-day game jam, with post-jam development",
       awards: "—",
       responsibilities: [
-        "Implemented bobbing/spinning animation for collectible pickups",
-        "Built camera-relative movement so controls stay intuitive from any angle",
-        "Playtested and iterated on feel/timing"
+        "Designed and wireframed the main HUD UI, ensuring clarity, usability, and smooth functionality",
+        "Developed and implemented the Freeze mechanic, adding strategic depth to gameplay",
+        "Collaborated with game designers to brainstorm improvements to the base game and translated their ideas into new features and mechanics",
+        "Debugged and resolved issues identified during initial playtesting, improving stability and player experience",
+        "Worked within a prebuilt game framework to build and integrate new mechanics that enhanced overall game flow"
       ]
     },
-    "azure-dashboard": {
+    "pookie-puca": {
+      tag: "game",
+      title: "Pookie Puca",
+      media: "<img src=\"images/pookie-puca-thumb.png\" alt=\"Pookie Puca key art\">",
+      playUrl: "https://pookiepuca.itch.io/pookie-puca",
+      engine: "Unreal Engine",
+      language: "Blueprints",
+      role: "Scripting & Programmer",
+      summary: "<p>Pookie Puca is a short narrative-driven, comedic horror game that involves puzzles, minigames, and cinematic shots. Help Pookie get away with murder and claim his grand prize of being financially stable.</p><p>This project was built for Scream Jam 2025 with a team of nine.</p>",
+      teamSize: "Team of 9",
+      duration: "—",
+      awards: "—",
+      responsibilities: [
+        "Served as lead programmer, implementing basic interaction functionality throughout the game",
+        "Designed and built the UI-based puzzle minigames",
+        "Built the dialogue system"
+      ]
+    },
+    "untitled-fighter": {
+      tag: "game",
+      title: "Untitled Fighter",
+      media: "<iframe src=\"https://www.youtube.com/embed/ol3Ogy-Yx_k\" title=\"Untitled Fighter\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
+      playUrl: "https://bubbacandy.itch.io/untitled-fighter",
+      engine: "Unreal Engine",
+      language: "Blueprints",
+      role: "Combat Designer, Programmer",
+      summary: "<p>Untitled Fighter is a fast-paced couch 1v1 dueling game where you and a friend battle as knights armed with nothing but your sword, your skill—and a single bullet. Every attack can be parried, even bullets, but caution is key: with only one round in the chamber, the only way to reload is to get up close and personal.</p><p>This project was developed as a one-month passion project with one collaborator, aimed at experimenting with combat systems. Inspired by classic 2D fighters and Souls-like parry mechanics, we merged the two genres with the unique twist of a one-in-the-chamber system. This was also our first attempt at implementing local couch play, expanding our skills in multiplayer design.</p>",
+      teamSize: "Team of 2",
+      duration: "1-month passion project",
+      awards: "—",
+      responsibilities: [
+        "Designed and developed the combat system, ensuring responsive and engaging player interactions",
+        "Programmed the player state machine and implemented a parry system to add depth to combat mechanics",
+        "Integrated and synchronized animations with the state machine for smooth and natural player movement",
+        "Developed the round system, handling flow and structure of gameplay sessions",
+        "Designed and programmed the gunshot mechanic, balancing technical functionality with gameplay feel"
+      ]
+    },
+    "project-cargo": {
+      tag: "game",
+      title: "Project Cargo",
+      media: "<img src=\"images/project-cargo-thumb.png\" alt=\"Project Cargo key art\">",
+      playUrl: "https://milkbagboii.itch.io/project-cargo",
+      engine: "Unreal Engine",
+      language: "Blueprints",
+      role: "Gameplay & AI Programmer",
+      summary: "<p>Project Cargo is a sci-fi horror demo where you explore the remains of a space vessel that's been taken over by a foreign alien, trying to survive while hiding and running for your life.</p><p>This project was built for Scream Jam 2024 over one month with a team of two.</p>",
+      teamSize: "Team of 2",
+      duration: "1-month game jam",
+      awards: "—",
+      responsibilities: [
+        "Created the main functionality of the AI and its states",
+        "Created hiding spots inside vents",
+        "Created the dialogue and game loop"
+      ]
+    },
+    "ai-canopy": {
       tag: "web",
-      title: "Azure AI Model Dashboard",
-      media: "[ Add screenshot here ]",
+      title: "AI Canopy",
+      media: "<img src=\"images/Microsoft-Azure.webp\" alt=\"AI Canopy\">",
+      engine: "React / ASP.NET Core",
+      language: "JavaScript & C#",
+      role: "e.g. Software Engineer Intern",
       summary: "An internal dashboard that discovers and visualizes AI models deployed across an organization's Azure subscriptions.",
-      teamSize: "e.g. Intern team of X",
+      teamSize: "Team of 2",
       duration: "Ongoing internship project",
       awards: "—",
       responsibilities: [
         "Built React frontend components for the dashboard views",
         "Worked on the C#/ASP.NET Core backend aggregating Azure API data",
         "Designed the proxy/aggregator pattern for pulling model data across subscriptions"
-      ]
-    },
-    "movie-watchlist-api": {
-      tag: "web",
-      title: "Movie Watchlist API",
-      media: "[ Add screenshot here ]",
-      summary: "A Flask API for tracking a personal movie watchlist, built as a hands-on exercise in REST fundamentals.",
-      teamSize: "Solo",
-      duration: "e.g. 1 week",
-      awards: "—",
-      responsibilities: [
-        "Designed REST endpoints for CRUD operations on watchlist entries",
-        "Handled request validation and error responses",
-        "Tested endpoints with Postman"
       ]
     }
   };
@@ -196,26 +276,33 @@
   } else {
     content.innerHTML = `
       <span class="badge ${data.tag}">${data.tag}</span>
-      <h1>${data.title}</h1>
+
+      <div class="title-row">
+        <h1>${data.title}</h1>
+        ${data.playUrl ? `<a class="btn" href="${data.playUrl}" target="_blank" rel="noopener">Play Game →</a>` : ''}
+      </div>
 
       <div class="media">${data.media}</div>
 
       <section>
         <div class="section-label">Summary</div>
-        <p class="summary">${data.summary}</p>
+        <div class="summary">${data.summary}</div>
       </section>
 
       <section>
         <div class="section-label">Project info</div>
         <div class="meta-grid">
+          <div class="meta-item"><h4>Engine</h4><p>${data.engine}</p></div>
+          <div class="meta-item"><h4>Language</h4><p>${data.language}</p></div>
           <div class="meta-item"><h4>Team size</h4><p>${data.teamSize}</p></div>
-          <div class="meta-item"><h4>Duration</h4><p>${data.duration}</p></div>
-          <div class="meta-item"><h4>Awards</h4><p>${data.awards}</p></div>
+          ${data.duration && data.duration !== '—' ? `<div class="meta-item"><h4>Duration</h4><p>${data.duration}</p></div>` : ''}
+          ${data.awards && data.awards !== '—' ? `<div class="meta-item"><h4>Awards</h4><p>${data.awards}</p></div>` : ''}
         </div>
       </section>
 
       <section>
         <div class="section-label">My responsibilities</div>
+        <p class="role-title">${data.role}</p>
         <ul class="resp-list">
           ${data.responsibilities.map(r => `<li>${r}</li>`).join('')}
         </ul>

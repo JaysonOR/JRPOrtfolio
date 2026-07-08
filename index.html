@@ -113,9 +113,8 @@
   /* ---------- FILTER BAR ---------- */
   .filter-bar{
     display:flex; gap:10px; flex-wrap:wrap;
-    padding:20px 0 40px;
-    border-bottom:1px solid var(--line);
-    margin-bottom:40px;
+    padding:20px 0 12px;
+    margin-bottom:12px;
   }
   .chip{
     display:inline-flex; align-items:center; gap:8px;
@@ -148,6 +147,19 @@
   }
   .section-label::after{content:""; flex:1; height:1px; background:var(--line);}
 
+  /* ---------- UNDER CONSTRUCTION ---------- */
+  .under-construction{
+    border:1px dashed var(--line); border-radius:var(--radius);
+    padding:48px 24px; text-align:center; color:var(--paper-dim);
+  }
+  .under-construction .uc-icon{
+    display:inline-block; font-size:12px; font-weight:700; letter-spacing:0.1em;
+    color:var(--warn); border:1px solid var(--line); border-radius:6px;
+    padding:4px 10px; margin-bottom:16px;
+  }
+  .under-construction h3{margin:0 0 8px; font-size:17px; color:var(--paper);}
+  .under-construction p{margin:0; font-size:14px; max-width:420px; margin-inline:auto;}
+
   /* ---------- PROJECT GRID ---------- */
   .grid{
     display:grid;
@@ -163,6 +175,7 @@
     display:flex; flex-direction:column;
   }
   .card:hover{border-color:var(--paper-dim); transform:translateY(-2px);}
+  a.card{color:inherit; text-decoration:none; cursor:pointer;}
   .card-media{
     aspect-ratio:16/9;
     background:
@@ -176,8 +189,11 @@
     font-size:10px; font-weight:700; letter-spacing:0.08em;
     padding:4px 8px; border-radius:5px; text-transform:uppercase;
   }
+  .card-media img{width:100%; height:100%; object-fit:cover;}
   .badge.web{background:var(--signal); color:#0d1712;}
   .badge.game{background:var(--warn); color:#241a04;}
+  .badge.jam{background:#e5484d; color:#2a0a0a;}
+  .card-media .badge.jam{left:auto; right:10px;}
   .card-body{padding:18px 20px 20px; display:flex; flex-direction:column; gap:8px; flex:1;}
   .card-body h3{margin:0; font-size:17px;}
   .card-body p{margin:0; font-size:14px; color:var(--paper-dim); flex:1;}
@@ -191,6 +207,13 @@
     margin-top:6px;
   }
   .card-link:hover{text-decoration:underline;}
+
+  .see-all-row{display:flex; gap:24px; flex-wrap:wrap; margin-top:28px;}
+  .see-all{
+    font-size:13px; font-weight:600; color:var(--paper-dim);
+    cursor:pointer; transition:color .15s ease;
+  }
+  .see-all:hover{color:var(--signal);}
 
   /* ---------- CREDENTIALS ---------- */
   .cred-list{display:flex; flex-direction:column; gap:12px;}
@@ -222,13 +245,14 @@
     font-size:12px; text-transform:uppercase; letter-spacing:0.1em;
     color:var(--paper-dim); margin:0 0 14px;
   }
-  .skill-list{display:flex; flex-wrap:wrap; gap:8px;}
-  .skill-list span{
-    font-size:13px; background:var(--panel); border:1px solid var(--line);
-    padding:6px 12px; border-radius:7px;
+  /* ---- Software engineering itemized list ---- */
+  .skill-itemized{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .skill-itemized li{
+    font-size:14px; font-weight:600; color:var(--paper);
+    padding-bottom:10px; border-bottom:1px solid var(--line);
   }
-
-  /* ---- Skill progress bars (engines & languages) ---- */
+  .skill-itemized li:last-child{border-bottom:none; padding-bottom:0;}
+  /* ---- Skill progress bars ---- */
   .skill-bar-row{margin-bottom:14px;}
   .skill-bar-row:last-child{margin-bottom:0;}
   .skill-bar-label{
@@ -266,7 +290,7 @@
       <a href="#work">Work</a>
       <a href="#systems">Systems</a>
       <a href="#credentials">Credentials</a>
-      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
     </div>
   </nav>
 
@@ -277,11 +301,11 @@
     <div class="hero-text">
       <div class="eyebrow">status: actively building</div>
       <h1>Jayson Ryals <span>— Game Developer &amp; Software Engineer</span></h1>
-      <p class="tagline">I'm a 19-year-old second-year student at Full Sail University, pursuing a B.S. in Interactive Technology with a concentration in Game Design. During my time as a student, I've built a strong network of connections with talented individuals across a wide variety of skills and specialties, which has let me collaborate with teams on numerous projects and game jams — further developing my skills as a game designer.</p>
+      <p class="tagline">I'm a 20-year-old second-year student at Full Sail University, pursuing a B.S. in Interactive Technology with a concentration in Game Design. During my time as a student, I've built a strong network of connections with talented individuals across a wide variety of skills and specialties, which has let me collaborate with teams on numerous projects and game jams — further developing my skills as a game designer.</p>
       <div class="hero-links">
         <a class="btn primary" href="#work">View projects</a>
         <a class="btn" href="mailto:you@example.com">Email me</a>
-        <a class="btn" href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="Jayson_Ryals_Resume.pdf" download target="_blank" rel="noopener">Resume</a>
       </div>
     </div>
   </header>
@@ -293,146 +317,119 @@
   </div>
 
   <section id="work">
-    <div class="section-label">Selected work</div>
+    <div class="section-label">Highlighted work</div>
     <div class="grid" id="projectGrid">
 
-      <div class="card" data-tag="game" data-featured="true">
+      <a class="card" data-tag="game" data-featured="true" href="project.html?project=knight-at-the-library">
         <div class="card-media">
           <span class="badge game">Game</span>
-          [ Drop gameplay clip / gif here ]
+          <span class="badge jam">Game Jam</span>
+          <img src="images/knight-at-the-library-thumb.jpg" alt="Knight at the Library key art">
         </div>
         <div class="card-body">
-          <h3>NPC Model-Swap System</h3>
-          <p>Runtime character reassignment via skinned mesh swapping, so a single NPC rig can wear any character model without breaking animation.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Animation Rigging</span></div>
-          <a class="card-link" href="project.html?project=npc-model-swap">Watch clip →</a>
+          <h3>Knight at the Library</h3>
+          <p>A first-person puzzle horror game where you play a robber evading a vengeful, possessed knight inside a haunted library. Built in a weekend, won 3rd place at the Orlando Library Game Jam.</p>
+          <div class="tags"><span class="tag">Unreal Engine</span><span class="tag">Blueprints</span><span class="tag">C++</span></div>
+          <span class="card-link">More info →</span>
         </div>
-      </div>
+      </a>
 
-      <div class="card" data-tag="game" data-featured="true">
+      <a class="card" data-tag="game" data-featured="true" href="project.html?project=retail-overflow">
         <div class="card-media">
           <span class="badge game">Game</span>
-          [ Drop gameplay clip / gif here ]
+          <span class="badge jam">Game Jam</span>
+          <img src="images/retail-overflow-thumb.jpg" alt="Retail Overflow key art">
         </div>
         <div class="card-body">
-          <h3>Ragdoll &amp; NavMesh Playground</h3>
-          <p>Tuned ragdoll physics and NavMesh agent behavior for believable NPC death and movement reactions.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">Physics</span><span class="tag">NavMesh</span></div>
-          <a class="card-link" href="project.html?project=ragdoll-navmesh">Watch clip →</a>
+          <h3>Retail Overflow</h3>
+          <p>A fast-paced cleaning sim where you're the only employee on shift, sweeping (and bonking) customers out of the way to keep the store in order.</p>
+          <div class="tags"><span class="tag">Unreal Engine</span><span class="tag">C++</span><span class="tag">AI Systems</span></div>
+          <span class="card-link">More info →</span>
         </div>
-      </div>
+      </a>
 
-      <div class="card" data-tag="game" data-featured="true">
+      <a class="card" data-tag="game" data-featured="true" href="project.html?project=jester-dice">
         <div class="card-media">
           <span class="badge game">Game</span>
-          [ Drop gameplay clip / gif here ]
+          <span class="badge jam">Game Jam</span>
+          <img src="images/jester-dice-thumb.jpg" alt="Jester Dice key art">
         </div>
         <div class="card-body">
-          <h3>Pickup &amp; Camera Mechanics</h3>
-          <p>Bobbing/spinning collectible pickups and camera-relative character movement, the small-feel systems that make a game readable to play.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">Gameplay</span></div>
-          <a class="card-link" href="project.html?project=pickup-camera">Watch clip →</a>
+          <h3>Jester Dice</h3>
+          <p>A Balatro-inspired dice game where you roll, freeze, and multiply your way through 20 rounds of push-your-luck scoring.</p>
+          <div class="tags"><span class="tag">Godot</span><span class="tag">GDScript</span></div>
+          <span class="card-link">More info →</span>
         </div>
-      </div>
+      </a>
 
-      <div class="card" data-tag="web" data-featured="true">
+      <a class="card" data-tag="game" href="project.html?project=pookie-puca">
+        <div class="card-media">
+          <span class="badge game">Game</span>
+          <span class="badge jam">Game Jam</span>
+          <img src="images/pookie-puca-thumb.png" alt="Pookie Puca key art">
+        </div>
+        <div class="card-body">
+          <h3>Pookie Puca</h3>
+          <p>A short narrative-driven, comedic horror game full of puzzles, minigames, and cinematic shots. Help Pookie get away with murder.</p>
+          <div class="tags"><span class="tag">Unreal Engine</span><span class="tag">Blueprints</span></div>
+          <span class="card-link">More info →</span>
+        </div>
+      </a>
+
+      <a class="card" data-tag="game" href="project.html?project=untitled-fighter">
+        <div class="card-media">
+          <span class="badge game">Game</span>
+          <img src="images/untitled-fighter-thumb.png" alt="Untitled Fighter key art">
+        </div>
+        <div class="card-body">
+          <h3>Untitled Fighter</h3>
+          <p>A fast-paced couch 1v1 dueling game where you and a friend battle as knights with a sword, a single bullet, and nothing but your skill to protect you.</p>
+          <div class="tags"><span class="tag">Unreal Engine</span><span class="tag">Combat Design</span></div>
+          <span class="card-link">More info →</span>
+        </div>
+      </a>
+
+      <a class="card" data-tag="game" href="project.html?project=project-cargo">
+        <div class="card-media">
+          <span class="badge game">Game</span>
+          <span class="badge jam">Game Jam</span>
+          <img src="images/project-cargo-thumb.png" alt="Project Cargo key art">
+        </div>
+        <div class="card-body">
+          <h3>Project Cargo</h3>
+          <p>A sci-fi horror demo where you explore the remains of a space vessel taken over by a foreign alien, hiding and running to survive.</p>
+          <div class="tags"><span class="tag">Unreal Engine</span><span class="tag">AI</span></div>
+          <span class="card-link">More info →</span>
+        </div>
+      </a>
+
+      <a class="card" data-tag="web" data-featured="true" href="project.html?project=ai-canopy">
         <div class="card-media">
           <span class="badge web">Web</span>
-          [ Add screenshot here ]
+          <img src="images/Microsoft-Azure.webp" alt="AI Canopy">
         </div>
         <div class="card-body">
-          <h3>Azure AI Model Dashboard</h3>
+          <h3>AI Canopy</h3>
           <p>An internal dashboard that discovers and visualizes AI models deployed across an organization's Azure subscriptions.</p>
           <div class="tags"><span class="tag">React</span><span class="tag">C# / ASP.NET Core</span><span class="tag">Azure API</span></div>
-          <a class="card-link" href="project.html?project=azure-dashboard">View case study →</a>
+          <span class="card-link">More info →</span>
         </div>
-      </div>
+      </a>
 
-      <div class="card" data-tag="web">
-        <div class="card-media">
-          <span class="badge web">Web</span>
-          [ Add screenshot here ]
-        </div>
-        <div class="card-body">
-          <h3>Movie Watchlist API</h3>
-          <p>A Flask API for tracking a personal movie watchlist, built as a hands-on exercise in REST fundamentals.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span></div>
-          <a class="card-link" href="project.html?project=movie-watchlist-api">View repo →</a>
-        </div>
-      </div>
+    </div>
 
+    <div class="see-all-row">
+      <span class="see-all" data-tag="game">See all games…</span>
+      <span class="see-all" data-tag="web">See all web projects…</span>
     </div>
   </section>
 
   <section id="systems">
     <div class="section-label">Gameplay Systems</div>
-    <div class="grid">
-
-      <div class="card">
-        <div class="card-media">
-          <span class="badge game">System</span>
-          [ Drop gameplay clip / gif here ]
-        </div>
-        <div class="card-body">
-          <h3>NPC Model-Swap System</h3>
-          <p>Runtime character reassignment via skinned mesh swapping, so a single NPC rig can wear any character model without breaking animation.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Animation Rigging</span></div>
-          <a class="card-link" href="system.html?system=npc-model-swap">See breakdown →</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="badge game">System</span>
-          [ Drop gameplay clip / gif here ]
-        </div>
-        <div class="card-body">
-          <h3>Ragdoll &amp; NavMesh System</h3>
-          <p>Tuned ragdoll physics and NavMesh agent behavior for believable NPC death and movement reactions.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">Physics</span><span class="tag">NavMesh</span></div>
-          <a class="card-link" href="system.html?system=ragdoll-navmesh">See breakdown →</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="badge game">System</span>
-          [ Drop gameplay clip / gif here ]
-        </div>
-        <div class="card-body">
-          <h3>Pickup &amp; Camera System</h3>
-          <p>Bobbing/spinning collectible pickups and camera-relative character movement, the small-feel systems that make a game readable to play.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">Gameplay</span></div>
-          <a class="card-link" href="system.html?system=pickup-camera">See breakdown →</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="badge game">System</span>
-          [ Drop gameplay clip / gif here ]
-        </div>
-        <div class="card-body">
-          <h3>Inventory System</h3>
-          <p>A slot-based inventory with stacking, drag-and-drop reordering, and item data driven by scriptable objects.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Scriptable Objects</span></div>
-          <a class="card-link" href="system.html?system=inventory-system">See breakdown →</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-media">
-          <span class="badge game">System</span>
-          [ Drop gameplay clip / gif here ]
-        </div>
-        <div class="card-body">
-          <h3>Dialogue System</h3>
-          <p>A branching dialogue system with conditional choices, so NPC conversations can react to what the player has already done.</p>
-          <div class="tags"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">State Machines</span></div>
-          <a class="card-link" href="system.html?system=dialogue-system">See breakdown →</a>
-        </div>
-      </div>
-
+    <div class="under-construction">
+      <div class="uc-icon mono">[ ! ]</div>
+      <h3>Under construction</h3>
+      <p>System breakdowns are being rebuilt with real project write-ups — check back soon.</p>
     </div>
   </section>
 
@@ -443,42 +440,44 @@
       <div class="cred-item">
         <div class="cred-rank mono">1st</div>
         <div class="cred-body">
-          <h3>Game Jam Name — Award Category</h3>
-          <p>One line on the game you built and what the award was for.</p>
+          <h3>RATZ — Full Sail 2026 HOF Game Jam</h3>
         </div>
-        <div class="cred-date">MON YYYY</div>
+        <div class="cred-date">Mar 2026</div>
       </div>
 
       <div class="cred-item">
-        <div class="cred-rank mono">2nd</div>
+        <div class="cred-rank mono">3rd</div>
         <div class="cred-body">
-          <h3>Game Jam Name — Award Category</h3>
-          <p>One line on the game you built and what the award was for.</p>
+          <h3>Retail Overflow — Mini Jam #43</h3>
         </div>
-        <div class="cred-date">MON YYYY</div>
+        <div class="cred-date">Jun 2025</div>
       </div>
 
       <div class="cred-item">
-        <div class="cred-rank mono">—</div>
+        <div class="cred-rank mono">3rd</div>
         <div class="cred-body">
-          <h3>Game Jam Name — Honorable Mention</h3>
-          <p>One line on the game you built and what the award was for.</p>
+          <h3>Knight at the Library — Orlando Library Game Jam</h3>
         </div>
-        <div class="cred-date">MON YYYY</div>
+        <div class="cred-date">Mar 2025</div>
       </div>
 
     </div>
   </section>
 
-  <section id="about">
-    <div class="section-label">About</div>
+  <section id="skills">
+    <div class="section-label">Skills</div>
     <div class="about-grid">
       <div>
-        <p>Currently interning as a software engineer building an Azure AI-model dashboard (React + C#/ASP.NET Core), and outside of that I've been developing games in Unity, from NPC systems to core gameplay feel.</p>
-
         <div class="skill-group">
           <h4>Software Engineering</h4>
-          <div class="skill-list"><span>JavaScript</span><span>React</span><span>C#</span><span>ASP.NET Core</span><span>Azure</span><span>Python / Flask</span></div>
+          <ul class="skill-itemized">
+            <li>JavaScript</li>
+            <li>React</li>
+            <li>C#</li>
+            <li>ASP.NET Core</li>
+            <li>Azure</li>
+            <li>Python / Flask</li>
+          </ul>
         </div>
       </div>
 
@@ -493,12 +492,12 @@
 
           <div class="skill-bar-row">
             <div class="skill-bar-label"><span class="name">Unity</span><span class="level">Intermediate</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%;"></div></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:55%;"></div></div>
           </div>
 
           <div class="skill-bar-row">
             <div class="skill-bar-label"><span class="name">Godot</span><span class="level">Intermediate</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%;"></div></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:48%;"></div></div>
           </div>
         </div>
 
@@ -506,18 +505,18 @@
           <h4>Languages</h4>
 
           <div class="skill-bar-row">
-            <div class="skill-bar-label"><span class="name">C#</span><span class="level">Skilled</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%;"></div></div>
-          </div>
-
-          <div class="skill-bar-row">
             <div class="skill-bar-label"><span class="name">Unreal Blueprints</span><span class="level">Skilled</span></div>
             <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%;"></div></div>
           </div>
 
           <div class="skill-bar-row">
+            <div class="skill-bar-label"><span class="name">C#</span><span class="level">Intermediate</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:55%;"></div></div>
+          </div>
+
+          <div class="skill-bar-row">
             <div class="skill-bar-label"><span class="name">GDScript</span><span class="level">Intermediate</span></div>
-            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%;"></div></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:48%;"></div></div>
           </div>
         </div>
       </div>
@@ -527,7 +526,7 @@
   <footer>
     <div>© 2026 Jayson. Built with intent, not a template.</div>
     <div>
-      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/jayson-ryals-89081226a/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="mailto:you@example.com">Email</a>
     </div>
   </footer>
@@ -553,11 +552,19 @@
     }
   }
 
+  function switchTab(tag){
+    chips.forEach(c => c.classList.toggle('active', c.dataset.tag === tag));
+    applyFilter(tag);
+  }
+
   chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      applyFilter(chip.dataset.tag);
+    chip.addEventListener('click', () => switchTab(chip.dataset.tag));
+  });
+
+  document.querySelectorAll('.see-all').forEach(link => {
+    link.addEventListener('click', () => {
+      switchTab(link.dataset.tag);
+      document.getElementById('filterBar').scrollIntoView({behavior:'smooth', block:'center'});
     });
   });
 
